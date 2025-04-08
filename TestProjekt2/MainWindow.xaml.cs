@@ -30,5 +30,12 @@ namespace TestProjekt2
         {
             myGridControl.View.ShowPrintPreview(this);
         }
+
+        private void treeListViewItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            string viewResourceName = e.Item.Tag.ToString();
+
+            secondGridControl.View = Resources[viewResourceName] as DevExpress.Xpf.Grid.GridDataViewBase;
+        }
     }
 }
