@@ -20,11 +20,10 @@
     
     <DockPanel>
         <dxr:RibbonControl DockPanel.Dock="Top" RibbonStyle="Office2019">
-            <dxr:RibbonControl.ToolbarItems>
-                <dxb:BarButtonItemLink BarItemName="newItem"/>
-            </dxr:RibbonControl.ToolbarItems>
+
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Home">
+                    
                     <dxr:RibbonPageGroup Caption="File">
                         <dxb:BarButtonItem x:Name="newItem" Content="New" Glyph="{dx:DXImage SvgImages/Actions/New.svg}"/>
                         <dxb:BarItemSeparator/>
@@ -57,9 +56,13 @@
                                            Tag="myCardView"
                                            ItemClick="treeListViewItem_ItemClick"/>         
                     </dxr:RibbonPageGroup>
+
                     
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
+            
+            
+            
         </dxr:RibbonControl>
         <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom">
             <dxr:RibbonStatusBarControl.RightItems>
@@ -67,7 +70,7 @@
             </dxr:RibbonStatusBarControl.RightItems>
         </dxr:RibbonStatusBarControl>
 
-        <dx:DXTabControl>
+        <dx:DXTabControl x:Name="myTabControl">
             <dx:DXTabItem Header="CardView">
                 <dxg:GridControl ItemsSource="{Binding Orders}"
                          x:Name="myGridControl"
@@ -87,9 +90,7 @@
 
                     <dxg:GridColumn FieldName="CustomerID" IsSmart="True"/>
 
-                    <dxg:GridColumn FieldName="OrderDate" IsSmart="True"
-                                GroupIndex="0"
-                                GroupInterval="DateMonth"/>
+                    <dxg:GridColumn FieldName="OrderDate" IsSmart="True"/>
 
                     <dxg:GridColumn FieldName="ShipVia" IsSmart="True">
                         <dxg:GridColumn.EditSettings>
@@ -110,11 +111,6 @@
                     <dxg:GridColumn FieldName="ShipCity" IsSmart="True"/>
 
                     <dxg:GridColumn FieldName="ShipCountry" IsSmart="True"/>
-
-                    <dxg:GridControl.View>
-                        <dxg:CardView ShowTotalSummary="True"         
-                                   PrintAllGroups="False"/>
-                    </dxg:GridControl.View>
 
                 </dxg:GridControl>
 
