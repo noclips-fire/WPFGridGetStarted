@@ -209,11 +209,17 @@
                             </dxc:AxisY2D>
                         </dxc:XYDiagram2D.AxisY>
 
+                        <dxc:XYDiagram2D.DefaultPane>
+                            <dxc:Pane/>
+                        </dxc:XYDiagram2D.DefaultPane>
                         <!-- СЕРИЯ 1 -->
                         <dxc:BarSideBySideSeries2D ArgumentDataMember="Month" DisplayName="Speedy Express" FilterString="[CompanyName] = 'Speedy Express'" LabelsVisibility="true" ValueDataMember="OrderCount">
                             <dxc:BarSideBySideSeries2D.Label>
                                 <dxc:SeriesLabel dxc:BarSideBySideSeries2D.LabelPosition="Outside"/>
                             </dxc:BarSideBySideSeries2D.Label>
+                            <dxc:BarSideBySideSeries2D.Model>
+                                <dxc:BorderlessGradientBar2DModel/>
+                            </dxc:BarSideBySideSeries2D.Model>
                         </dxc:BarSideBySideSeries2D>
 
                         <!-- СЕРИЯ 2 -->
@@ -221,6 +227,9 @@
                             <dxc:BarSideBySideSeries2D.Label>
                                 <dxc:SeriesLabel dxc:BarSideBySideSeries2D.LabelPosition="Outside"/>
                             </dxc:BarSideBySideSeries2D.Label>
+                            <dxc:BarSideBySideSeries2D.Model>
+                                <dxc:BorderlessGradientBar2DModel/>
+                            </dxc:BarSideBySideSeries2D.Model>
                         </dxc:BarSideBySideSeries2D>
 
                         <!-- СЕРИЯ 3 -->
@@ -228,6 +237,9 @@
                             <dxc:BarSideBySideSeries2D.Label>
                                 <dxc:SeriesLabel dxc:BarSideBySideSeries2D.LabelPosition="Outside"/>
                             </dxc:BarSideBySideSeries2D.Label>
+                            <dxc:BarSideBySideSeries2D.Model>
+                                <dxc:BorderlessGradientBar2DModel/>
+                            </dxc:BarSideBySideSeries2D.Model>
                         </dxc:BarSideBySideSeries2D>
 
                     </dxc:XYDiagram2D>
