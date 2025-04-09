@@ -39,9 +39,9 @@
                         <dxb:BarButtonItem x:Name="saveAsItem" Content="Save As" LargeGlyph="{dx:DXImage SvgImages/Save/SaveAs.svg}"/>
                     </dxr:RibbonPageGroup>
                     
-                    <dxr:RibbonPageGroup Caption="Grid Actions">
+                    <dxr:RibbonPageGroup Caption="Print">
                         <dxb:BarButtonItem ItemClick="printPreviewItem_ItemClick" x:Name="printPreviewItem" Content="Print Preview" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/Print.svg}"/>
-                        <dxb:BarButtonItem x:Name="treeListViewItem"
+                        <!--<dxb:BarButtonItem x:Name="treeListViewItem"
                                            Content="TreeListView"
                                            Tag="myTreeListView"
                                            ItemClick="treeListViewItem_ItemClick"/>     
@@ -54,10 +54,31 @@
                         <dxb:BarButtonItem x:Name="cardViewItem"
                                            Content="CardView"
                                            Tag="myCardView"
-                                           ItemClick="treeListViewItem_ItemClick"/>         
+                                           ItemClick="treeListViewItem_ItemClick"/>-->         
                     </dxr:RibbonPageGroup>
 
-                    
+                    <dxr:RibbonPageGroup Caption="Calculate">
+                        <dxb:BarEditItem x:Name="fromDateEditItem" 
+                                         Content="From"
+                                         EditWidth="100">
+                            <dxb:BarEditItem.EditSettings>
+                                <dxe:DateEditSettings DisplayFormat="d" />
+                            </dxb:BarEditItem.EditSettings>
+                        </dxb:BarEditItem>
+                        <dxb:BarEditItem x:Name="toDateEditItem" 
+                                         Content="To"
+                                         EditWidth="100">
+                            <dxb:BarEditItem.EditSettings>
+                                <dxe:DateEditSettings DisplayFormat="d" />
+                            </dxb:BarEditItem.EditSettings>
+                        </dxb:BarEditItem>
+
+                        <dxb:BarButtonItem x:Name="calculateShippingCostItem"
+                                           Content="Calculate Shipping Cost"
+                                           ItemClick="CalculateShippingCostItem_ItemClick" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Business_Calculator.svg}"/>    
+                    </dxr:RibbonPageGroup>
+
+
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
             
@@ -70,53 +91,13 @@
             </dxr:RibbonStatusBarControl.RightItems>
         </dxr:RibbonStatusBarControl>
 
-        <dx:DXTabControl x:Name="myTabControl">
-            <dx:DXTabItem Header="CardView">
-                <dxg:GridControl ItemsSource="{Binding Orders}"
-                         x:Name="myGridControl"
-                         FilterString="ShipCountry != 'Brazil'">
-
-                    <dxg:GridControl.TotalSummary>
-                        <dxg:GridSummaryItem FieldName="OrderID"
-                                         SummaryType="Count"/>
-                    </dxg:GridControl.TotalSummary>
-
-                    <dxg:GridControl.GroupSummary>
-                        <dxg:GridSummaryItem FieldName="OrderID"
-                         SummaryType="Count"/>
-                    </dxg:GridControl.GroupSummary>
-
-                    <dxg:GridColumn FieldName="OrderID" IsSmart="True"/>
-
-                    <dxg:GridColumn FieldName="CustomerID" IsSmart="True"/>
-
-                    <dxg:GridColumn FieldName="OrderDate" IsSmart="True"/>
-
-                    <dxg:GridColumn FieldName="ShipVia" IsSmart="True">
-                        <dxg:GridColumn.EditSettings>
-                            <dxg:LookUpEditSettings ItemsSource="{Binding Shippers}" 
-                                                DisplayMember="CompanyName" 
-                                                ValueMember="ShipperID"/>
-                        </dxg:GridColumn.EditSettings>
-                    </dxg:GridColumn>
-
-                    <dxg:GridColumn FieldName="Freight" IsSmart="True">
-                        <dxg:GridColumn.EditSettings>
-                            <dxe:TextEditSettings MaskType="Numeric" Mask="c" DisplayFormat="c"/>
-                        </dxg:GridColumn.EditSettings>
-                    </dxg:GridColumn>
-
-                    <dxg:GridColumn FieldName="ShipName" IsSmart="True"/>
-
-                    <dxg:GridColumn FieldName="ShipCity" IsSmart="True"/>
-
-                    <dxg:GridColumn FieldName="ShipCountry" IsSmart="True"/>
-
-                </dxg:GridControl>
+        <!--<dx:DXTabControl x:Name="myTabControl">
+            <dx:DXTabItem Header="Shipping details">
+                
 
             </dx:DXTabItem>
 
-            <dx:DXTabItem Header="TreeListView">
+            <dx:DXTabItem Header="Employee details">
                 
                 <dxg:GridControl ItemsSource="{Binding Employees}"
                                  View="{StaticResource myTreeListView}"
@@ -134,8 +115,61 @@
 
             </dx:DXTabItem>
 
-        </dx:DXTabControl>
-        
-        
+        </dx:DXTabControl>-->
+
+        <dxg:GridControl ItemsSource="{Binding Orders}"
+                         x:Name="myGridControl">
+            <!--FilterString="ShipCountry != 'Brazil'"-->
+
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem FieldName="OrderID"
+                         SummaryType="Count"/>
+            </dxg:GridControl.TotalSummary>
+
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="OrderID"
+                                     SummaryType="Count"/>
+            </dxg:GridControl.GroupSummary>
+
+            <dxg:GridColumn FieldName="OrderID" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="CustomerID" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="OrderDate" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="RequiredDate" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="ShippedDate" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="ShipVia" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxg:LookUpEditSettings ItemsSource="{Binding Shippers}" 
+                                DisplayMember="CompanyName" 
+                                ValueMember="ShipperID"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn FieldName="Freight" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings MaskType="Numeric" Mask="c" DisplayFormat="c"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn FieldName="ShipName" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="ShipCity" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="ShipCountry" IsSmart="True"/>
+
+            <dxg:GridControl.View>
+                <dxg:TableView ShowTotalSummary = "True"
+                                AutoWidth ="True"
+                                EditFormShowMode ="Inline"
+                                PrintAllGroups ="False"
+                                AllowConditionalFormattingMenu = "True"/>
+             </dxg:GridControl.View>
+
+        </dxg:GridControl>
+
     </DockPanel>
 </dx:ThemedWindow>
