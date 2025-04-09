@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DevExpress.Charts.Designer;
+using DevExpress.XtraExport.Helpers;
 
 
 namespace TestProjekt2
@@ -284,6 +285,16 @@ namespace TestProjekt2
             public string CompanyName { get; set; }
             public DateTime Month { get; set; }    
             public int OrderCount { get; set; }  
+        }
+
+        private void addNewOrderItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+        }
+
+        private void deleteOrderItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }   
 }

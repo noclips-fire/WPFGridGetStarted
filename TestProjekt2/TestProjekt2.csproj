@@ -83,6 +83,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddOrderWindow.xaml.cs">
+      <DependentUpon>AddOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
       <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Page Include="AddOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
