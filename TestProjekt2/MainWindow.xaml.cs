@@ -20,19 +20,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DevExpress.Charts.Designer;
 
 
 namespace TestProjekt2
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : ThemedWindow
     {
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new ViewModel();
+
+            using (var db = new NorthwindEntities())
+            {
+                var tempStats = db.Orders
+                    .Where(o => o.ShippedDate != null)
+                    .Select(o => new
+                    {
+                        ShippedDate = o.ShippedDate.Value,
+                        CompanyName = o.Shipper.CompanyName
+                    })
+                    .ToList() // Сначала загружаем всё в память
+                    .GroupBy(x => new
+                    {
+                        Month = new DateTime(x.ShippedDate.Year, x.ShippedDate.Month, 1),
+                        x.CompanyName
+                    })
+                    .Select(g => new DeliveryStats
+                    {
+                        CompanyName = g.Key.CompanyName,
+                        Month = g.Key.Month,
+                        OrderCount = g.Count()
+                    })
+                    .ToList();
+
+                OrdersStats = tempStats;
+            }
+
+            chartControl.DataSource = OrdersStats;
         }
 
         private void printPreviewItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -235,8 +261,29 @@ namespace TestProjekt2
             };
         }
 
+        private void printPreviewChartItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            chartControl.ShowPrintPreview(this);
+        }
 
+        private void showDesignerChartItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ChartDesigner chartDesigner = new ChartDesigner(chartControl);
+            chartDesigner.Show(this);
+        }
 
+        private void addDataChartItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //chartControl.Diagram.Series[0].Points.Add(new DevExpress.Xpf.Charts.SeriesPoint("Confections", 21));
+        }
 
+        public List<DeliveryStats> OrdersStats { get; set; }
+
+        public class DeliveryStats
+        {
+            public string CompanyName { get; set; }
+            public DateTime Month { get; set; }    
+            public int OrderCount { get; set; }  
+        }
     }   
 }
