@@ -18,7 +18,6 @@ namespace TestProjekt2
                 Orders = new ObservableCollection<Order>();
                 Shippers = new ObservableCollection<Shipper>();
                 Employees = new ObservableCollection<Employee>();
-
             }
             else
             {
@@ -51,6 +50,5 @@ namespace TestProjekt2
             get => GetValue<ObservableCollection<Employee>>();
             private set => SetValue(value);
         }
-
     }
 }

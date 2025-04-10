@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,6 +24,7 @@ namespace TestProjekt2
         public AddOrderWindow()
         {
             InitializeComponent();
+            
 
             comboShipVia.ItemsSource = new List<KeyValuePair<int, string>>
             {
@@ -32,36 +34,74 @@ namespace TestProjekt2
             };
 
             comboShipVia.SelectedIndex = 0;
+
+            using (var db = new NorthwindEntities())
+            {
+                var customers = db.Customers.ToList();
+                comboCustomers.ItemsSource = customers;
+                comboCustomers.SelectedIndex = 0; 
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                using (var db = new NorthwindEntities())
+                decimal freight;
+                if (!decimal.TryParse(txtFreight.Text, out freight))
                 {
-                    var newOrder = new Order
-                    {
-                        CustomerID = txtCustomerID.Text,
-                        EmployeeID = Convert.ToInt32(txtEmployeeID.Text),
-                        OrderDate = DateTime.Now,
-                        ShippedDate = DateTime.Now,
-                        ShipVia = (int)comboShipVia.SelectedValue,
-                        //string companyName = ((KeyValuePair<int, string>)comboShipVia.SelectedItem).Value;
-                        Freight = decimal.Parse(txtFreight.Text),
-                        RequiredDate = DateTime.Now.AddDays(7)
-                    };
-
-                    db.Orders.Add(newOrder);
-                    db.SaveChanges();
+                    System.Windows.MessageBox.Show("Invalid Freight value");
+                    return;
                 }
 
-                MessageBox.Show("Order successfully added!");
+                if (comboCustomers.SelectedItem is Customer selectedCustomer)
+                {
+                    using (var db = new NorthwindEntities())
+                    {
+
+
+                        var newOrder = new Order
+                        {
+
+                            CustomerID = selectedCustomer.CustomerID,
+                            EmployeeID = string.IsNullOrEmpty(txtEmployeeID.Text) ? (int?)null : Convert.ToInt32(txtEmployeeID.Text),
+                            OrderDate = DateTime.Now,
+                            ShippedDate = DateTime.Now,
+                            ShipVia = (int)comboShipVia.SelectedValue,
+                            Freight = string.IsNullOrEmpty(txtFreight.Text) ? (decimal?)null : decimal.Parse(txtFreight.Text),
+                            RequiredDate = DateTime.Now.AddDays(7),
+                            ShipName = "Servus",
+                            ShipAddress = selectedCustomer.Address,
+                            ShipCity = selectedCustomer.City,
+                            ShipRegion = selectedCustomer.Region,
+                            ShipCountry = selectedCustomer.Country,
+                            ShipPostalCode = selectedCustomer.PostalCode,
+
+                        };
+
+                        db.Orders.Add(newOrder);
+                        db.SaveChanges();
+                        //db.Orders.Remove(newOrder);
+                    }
+                }
+
+                System.Windows.MessageBox.Show("Order successfully added!");
                 this.DialogResult = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                System.Windows.MessageBox.Show("Error: " + ex.Message);
+                System.Windows.MessageBox.Show("Details: " + ex.InnerException?.Message);
+                //MessageBox.Show("Stack Trace: " + ex.StackTrace);
+            }
+        }
+        private void comboCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboCustomers.SelectedItem is Customer selectedCustomer)
+            {
+                txtShipCity.Text = selectedCustomer.City;
+                txtShipCountry.Text = selectedCustomer.Country;
+                txtShipAddress.Text = selectedCustomer.Address;
             }
         }
     }

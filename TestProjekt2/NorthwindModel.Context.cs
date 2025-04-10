@@ -28,5 +28,6 @@ namespace TestProjekt2
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Shipper> Shippers { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
     }
 }

@@ -287,14 +287,33 @@ namespace TestProjekt2
             public int OrderCount { get; set; }  
         }
 
+        private void LoadOrders()
+        {
+            using (var db = new NorthwindEntities())
+            {
+                var orders = db.Orders.ToList();
+                myGridControl.ItemsSource = orders;
+            }
+        }
+
         private void addNewOrderItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
+            var addWindow = new AddOrderWindow();
+            if (addWindow.ShowDialog() == true)
+            {
+                LoadOrders();
+            }
         }
 
         private void deleteOrderItem_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var selectedOrder = myGridControl.SelectedItem as Order;
 
+            var deleteWindow = new DeleteOrderWindow(selectedOrder);
+            if (deleteWindow.ShowDialog() == true)
+            {
+                LoadOrders();
+            }
         }
     }   
 }

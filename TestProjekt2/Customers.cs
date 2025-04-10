@@ -31,6 +31,5 @@ namespace TestProjekt2
     
         public virtual Employee Employee { get; set; }
         public virtual Shipper Shipper { get; set; }
-        public virtual Customer Customer { get; set; }
     }
 }

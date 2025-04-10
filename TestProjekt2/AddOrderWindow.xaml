@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestProjekt2"
         mc:Ignorable="d"
-        Title="AddOrderWindow" Height="450" Width="800">
+        Title="AddOrderWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="20" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -22,10 +23,17 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Customer ID:" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
-        <TextBox x:Name="txtCustomerID" Grid.Row="0" Grid.Column="1" Width="300" Margin="5"/>
+        <ComboBox x:Name="comboCustomers" 
+          Grid.Row="0" Grid.Column="1"
+          Width="300"
+          Margin="5"
+          DisplayMemberPath="CompanyName" 
+          SelectedValuePath="CustomerID"
+          SelectionChanged="comboCustomers_SelectionChanged"/>
 
         <TextBlock Text="Employee ID:" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
         <TextBox x:Name="txtEmployeeID" Grid.Row="1" Grid.Column="1" Width="300" Margin="5"/>
@@ -42,13 +50,16 @@
         <TextBox x:Name="txtFreight" Grid.Row="3" Grid.Column="1" Width="300" Margin="5"/>
 
         <TextBlock Text="Ship City:" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
-        <TextBox x:Name="txtShipCity" Grid.Row="4" Grid.Column="1" Width="300" Margin="5"/>
+        <TextBox x:Name="txtShipCity" Grid.Row="4" Grid.Column="1" Width="300" Margin="5" IsReadOnly="True"/>
 
         <TextBlock Text="Ship Country:" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
-        <TextBox x:Name="txtShipCountry" Grid.Row="5" Grid.Column="1" Width="300" Margin="5"/>
+        <TextBox x:Name="txtShipCountry" Grid.Row="5" Grid.Column="1" Width="300" Margin="5" IsReadOnly="True"/>
+
+        <TextBlock Text="Ship Address:" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
+        <TextBox x:Name="txtShipAddress" Grid.Row="6" Grid.Column="1" Width="300" Margin="5" IsReadOnly="True"/>
 
         <Button Content="Save"
-            Grid.Row="6" Grid.Column="1"
+            Grid.Row="7" Grid.Column="1"
             HorizontalAlignment="Left"
             Margin="5,20,0,0"
             Click="SaveButton_Click" Width="100"/>
